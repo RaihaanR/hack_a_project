@@ -90,7 +90,7 @@ app.post('/users', function (req, res) {
   console.log(newUser);
 
   if (newUser['username'] == null) {
-    return res.status(400).json({ message: "Invalid event format"});
+    return res.status(400).json({message: "Invalid event format"});
   }
 
   users.push(newUser);
@@ -100,7 +100,7 @@ app.post('/users', function (req, res) {
 
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
-      return res.status(500).json({ message: "Internal server format"});
+      return res.status(500).json({message: "Internal server format"});
     }
 
     return res.status(200).send(users);
