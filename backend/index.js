@@ -80,16 +80,16 @@ app.get('/users/:uname/events', function (req, res) {
 
     JSON.parse(data)['users'].forEach(u => {
       if (u['username'] === uname.toString()) {
-        var names = [];
+        var events = [];
 
         fs.readFile('./data/data.json', function (err1, data1) {
           var es = JSON.parse(data1);
 
           u['events'].forEach(id => {
-            names.push(es['events'][id - 1]['name']);
+            events.push(es['events'][id]);
           });
 
-          return res.json(names);
+          return res.json(events);
         });
       }
     });

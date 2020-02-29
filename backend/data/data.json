@@ -1,7 +1,7 @@
 {
     "events":[
        {
-          "id":1,
+          "id":0,
           "name":"Climb Queens Tower",
           "organiser":"DoCSoc",
           "location":"Imperial College London",
@@ -11,7 +11,7 @@
           "visitors":["DoCSoc"]
        },
        {
-          "id":2,
+          "id":1,
           "name":"Revel",
           "organiser":"DoCSoc",
           "location":"Quaglino's",
@@ -21,7 +21,7 @@
           "visitors":[]
        },
        {
-          "id":3,
+          "id":2,
           "name":"Karaoke",
           "organiser":"DoCSoc",
           "location":"Sherfield Building",
