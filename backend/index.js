@@ -9,14 +9,24 @@ app.get('/', function (req, res) {
 })
 
 app.get('/events', function (req, res) {
-  var data = fs.readFileSync('./data/data.json');
-  res.json(JSON.parse(data)["events"]);
+  fs.readFile('./data/data.json', function (err, data) {
+    if (err) {
+      return res.status(500).send();
+    }
+
+    return res.json(JSON.parse(data));
+  });
 })
 
 app.get('/events/:id', function (req, res) {
   var id = req.params.id;
-  var data = JSON.parse(fs.readFileSync('./data/data.json'))['events'];
-  res.json(data[id]);
+  fs.readFile('./data/data.json', function (err, data) {
+    if (err) {
+      return res.status(500).send();
+    }
+
+    return res.json(JSON.parse(data)['events'][id]);
+  });
 })
 
 app.post('/events', function (req, res) {
