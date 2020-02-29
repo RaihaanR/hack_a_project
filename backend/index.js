@@ -23,14 +23,20 @@ app.get('/events', function (req, res) {
 });
 
 app.get('/events/:id', function (req, res) {
-  var id = req.params.id;
+  var id = parseInt(req.params.id);
 
   fs.readFile('./data/events.json', function (err, data) {
     if (err) {
       return res.sendStatus(500);
     }
 
-    return res.send(JSON.parse(data)['events'][id]);
+    var events = JSON.parse(data)['values'];
+
+    if (id >= events.length) {
+      return res.status(400).send("Event not found");
+    }
+
+    return res.send(events[id]);
   });
 });
 
@@ -73,12 +79,13 @@ app.get('/events/:id/getUsers', function (req, res) {
       }
 
       var users = [];
+      var es = JSON.parse(data)['events'];
       var us = JSON.parse(data1)['users'];
-      var es = JSON.parse(data)['events']
       
       if (id >= es.length) {
-        return res.status(400).send("Even id not found")
+        return res.status(400).send("Event not found");
       }
+
       JSON.parse(data)['events'][id]['visitors'].forEach(uid => {
         users.push(us[uid]['username']);
       });
@@ -115,6 +122,7 @@ app.post('/events', function (req, res) {
     if (err) {
       return res.sendStatus(500);
     }
+
     return res.send(events);
   });
 });
