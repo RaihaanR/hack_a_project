@@ -8,11 +8,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/events', function (req, res) {
-  fs.readFile('./data/data.json'), function (err, data) {
-    if (err) {
-      throw err;
-    }
-  }
+  var data = fs.readFileSync('./data/data.json');
   console.log(data.toString());
 })
 
