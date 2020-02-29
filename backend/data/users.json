@@ -3,7 +3,7 @@
         {
             "id":1,
             "username":"DoCSoc",
-            "events":[]
+            "events":[1, 2, 3]
         },
         {
             "id":2,

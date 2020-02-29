@@ -24,6 +24,7 @@ app.get('/events', function (req, res) {
 
 app.get('/events/:id', function (req, res) {
   var id = req.params.id;
+
   fs.readFile('./data/data.json', function (err, data) {
     if (err) {
       return res.status(500).send();
@@ -48,7 +49,7 @@ app.post('/events', function (req, res) {
   newEvent["post_time"] = new Date();
   newEvent["visitors"] = [];
 
-  fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function(err) {
+  fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function (err) {
     if (err) {
       return res.status(500).json({message: "Internal server error"});
     }
@@ -66,6 +67,36 @@ app.get('/users', function (req, res) {
   });
 });
 
+function getEventNameFromId (id) {
+  
+}
+
+app.get('/users/:uname/events', function (req, res) {
+  var uname = req.params.uname;
+
+  fs.readFile('./data/users.json', function (err, data) {
+    if (err) {
+      return res.status(500).send();
+    }
+
+    JSON.parse(data)['users'].forEach(u => {
+      if (u['username'] === uname.toString()) {
+        var names = [];
+
+        fs.readFile('./data/data.json', function (err1, data1) {
+          var es = JSON.parse(data1);
+
+          u['events'].forEach(id => {
+            names.push(es['events'][id - 1]['name']);
+          });
+
+          return res.json(names);
+        });
+      }
+    });
+  });
+});
+
 app.post('/users', function (req, res) {
   var data = fs.readFileSync('./data/users.json');
   var users = JSON.parse(data)['users'];
@@ -74,7 +105,7 @@ app.post('/users', function (req, res) {
   console.log(newUser);
 
   if (newUser['username'] == null) {
-    return res.status(400).json({ message: "Invalid event format"});
+    return res.status(400).json({message: "Invalid event format"});
   }
   users.forEach(user => {
     if (user['username'] === newUser['username']) {
@@ -87,7 +118,7 @@ app.post('/users', function (req, res) {
   newUser['id'] = users.length;
   newUser['events'] = [];
 
-  fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function(err) {
+  fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
       return res.status(500).json({ message: "Internal server error"});
     }
@@ -95,5 +126,4 @@ app.post('/users', function (req, res) {
   });
 });
 
-app.listen(port)
-
+app.listen(port);
