@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonCard, IonItem, IonIcon, IonLabel, IonButton, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonList, IonImg, IonModal, IonSegment, IonSegmentButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonCard, IonIcon, IonLabel, IonButton, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonImg, IonModal, IonSegment, IonSegmentButton } from '@ionic/react';
 import './Tab2.css';
 import { location, time } from 'ionicons/icons';
 
@@ -9,6 +9,7 @@ type Event = {
   organiser: string;
   name: string;
   location: string;
+  description: string;
   time: string;
 };
 
@@ -20,6 +21,7 @@ const Tab2: React.FC = () => {
     organiser: 'null', 
     name:'null', 
     location:'null', 
+    description:'null', 
     time: 'null'
   };
 
@@ -39,14 +41,16 @@ const Tab2: React.FC = () => {
     fetch(server+"events/")
     .then(res => res.json())
     .then(
-      (result) => {const eventList: Event[] = [];(result as Event[]).forEach(element => {
-        eventList.push(element as Event);
-        console.log(events);
-      });
-      setEvent(eventList);
-    }
+      (result) => {
+        const eventList: Event[] = [];
+        (result as Event[]).forEach(element => {
+          eventList.push(element);
+          console.log(events);
+        });
+        setEvent(eventList);
+      }
     );
-  });
+  }, [events.length]);
 
   return (
     <IonPage>
@@ -74,10 +78,7 @@ const Tab2: React.FC = () => {
             </IonCardHeader>
 
             <IonCardContent>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {modalEvent.description}
             </IonCardContent>
 
             <IonCardContent>
