@@ -132,7 +132,9 @@ app.get('/users/:uname/events', function (req, res) {
     if (err) {
       return res.sendStatus(500);
     }
-    var found = false
+
+    var found = false;
+
     JSON.parse(data)['users'].forEach(u => {
       if (u['username'] === uname.toString()) {
         found = true
@@ -153,6 +155,7 @@ app.get('/users/:uname/events', function (req, res) {
         });
       }
     });
+
     if (!found) {
       return res.status(400).send("Username not found");
     }
@@ -169,14 +172,17 @@ app.post('/users', function (req, res) {
   if (newUser['username'] == null) {
     return res.status(400).send("Invalid event format");
   }
-  flag = false
+
+  var found = false;
+
   users.forEach(user => {
     if (user['username'] === newUser['username']) {
-      flag = true
+      found = true
       return res.status(400).send("Username is already taken");
     }
   });
-  if (flag) {
+
+  if (found) {
     return;
   }
 
@@ -201,11 +207,13 @@ app.get('/users/:username', function (req, res) {
     if (err) {
       return res.sendStatus(500);
     }
-    var found = false
+
+    var found = false;
+
     JSON.parse(data)['users'].forEach (u => {
       if (u['username'] === username) {
         found = true
-        return res.status(200).json(u);
+        return res.send(u);
       }
     });
 
