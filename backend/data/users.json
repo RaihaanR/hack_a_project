@@ -2,12 +2,12 @@
     "users":[
         {
             "id":1,
-            "username":"DocSoc",
+            "username":"DoCSoc",
             "events":[]
         },
         {
             "id":2,
-            "username":"devesh",
+            "username":"TestUser1",
             "events":[]
         }
     ]
