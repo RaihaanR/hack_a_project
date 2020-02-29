@@ -2,6 +2,8 @@ var express = require('express');
 var fs = require('fs');
 var app = express();
 
+var port = process.env.PORT || 3000;
+
 app.use(express.json());
 
 app.get('/', function (req, res) {
@@ -74,4 +76,4 @@ app.post('/users', function (req, res) {
   })
 })
 
-app.listen(3000)
+app.listen(port)
