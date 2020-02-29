@@ -107,8 +107,14 @@ app.post('/events', function (req, res) {
   var data = fs.readFileSync('./data/events.json');
   var events = JSON.parse(data)['events'];
   var newEvent = req.body;
-
-  if (newEvent['name'] == null || newEvent['organiser'] == null || newEvent['location'] == null || newEvent['time'] == null || newEvent['image'] == null || newEvent['description']) {
+  console.log(newEvent['name'])
+  console.log(newEvent['organiser'])
+  console.log(newEvent['location'])
+  console.log(newEvent['time'])
+  console.log(newEvent['image'])
+  console.log(newEvent['description'])
+  if (newEvent['name'] === null || newEvent['organiser'] === null || newEvent['location'] === null || newEvent['time'] === null || newEvent['image'] === null || newEvent['description'] === null) {
+    console.log("why")
     return res.status(400).send("Invalid event format");
   }
 
