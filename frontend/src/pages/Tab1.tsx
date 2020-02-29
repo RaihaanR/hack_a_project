@@ -88,66 +88,7 @@ const Tab1: React.FC = () => {
           </IonCard>
           <IonButton onClick={() => setShowModal(false)}>Submit</IonButton>
           <IonButton onClick={() => setShowModal(false)}>Cancle</IonButton>
-          {/* <IonButton onClick={() => setShowModal(false)}>Submit</IonButton> */}
-          {/* <IonCardContent>
-            <IonSegment
-              value="cancel"
-              onIonChange={e => console.log("Segment selected", e.detail.value)}
-            >
-              <IonSegmentButton
-                value="submit"
-                onClick={() => setShowModal(false)}
-              >
-                <IonLabel>Submit</IonLabel>
-              </IonSegmentButton>
-              <IonSegmentButton
-                value="cancel"
-                onClick={() => setShowModal(false)}
-              >
-                <IonLabel>Cancel</IonLabel>
-              </IonSegmentButton>
-            </IonSegment>
-          </IonCardContent> */}
         </IonModal>
-        {/* <IonButton onClick={() => setShowModal(true)}>Show Modal</IonButton> */}
-
-        {/* <IonSegment
-          value="no"
-          onIonChange={e => console.log("Segment selected", e.detail.value)}
-        >
-          <IonSegmentButton value="going">
-            <IonLabel>Going</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="no">
-            <IonLabel>No</IonLabel>
-          </IonSegmentButton>
-        </IonSegment> */}
-
-        {/* <IonFab vertical="center" horizontal="end" slot="fixed">
-          <IonFabButton>
-            <IonIcon name="share" />
-          </IonFabButton>
-          <IonFabList side="top">
-            <IonFabButton>
-              <IonIcon name="logo-vimeo" />
-            </IonFabButton>
-          </IonFabList>
-          <IonFabList side="bottom">
-            <IonFabButton>
-              <IonIcon name="logo-facebook" />
-            </IonFabButton>
-          </IonFabList>
-          <IonFabList side="start">
-            <IonFabButton>
-              <IonIcon name="logo-instagram" />
-            </IonFabButton>
-          </IonFabList>
-          <IonFabList side="end">
-            <IonFabButton>
-              <IonIcon name="logo-twitter" />
-            </IonFabButton>
-          </IonFabList>
-        </IonFab> */}
       </IonContent>
     </IonPage>
   );

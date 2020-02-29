@@ -45,19 +45,36 @@ const Tab3: React.FC = () => {
     time: "null"
   };
 
+  const [search, setSearch] = useState("");
   const [modalEvent, setModalEvent] = useState(nullEvent);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([nullEvent]);
+  const [filteredEvents, setFilteredEvents] = useState(events);
 
   function openEvent(e: Event) {
     setModalEvent(e);
     setShowModal(true);
   }
 
-  // useEffect(() => {
-  //   fetchUserEvents();
-  //   console.log(id);
-  // }, []);
+  function filter() {
+    console.log(search);
+    if (search === "") {
+      setFilteredEvents(events);
+    } else {
+      const eventList: Event[] = [];
+      events.forEach(event => {
+        if (event.name.toLowerCase().startsWith(search.toLowerCase())) {
+          eventList.push(event);
+        }
+        console.log(events);
+      });
+      if (eventList.length > 0) {
+        setFilteredEvents(eventList);
+      } else {
+        setFilteredEvents(events);
+      }
+    }
+  }
 
   const [item, setItem] = useState([]);
   let username = "DoCSoc";
@@ -105,7 +122,18 @@ const Tab3: React.FC = () => {
           </IonRow>
           <IonRow className="ion-margin-start">Interests: Facebook</IonRow>
         </IonGrid> */}
-        <IonSearchbar showCancelButton="always"></IonSearchbar>
+
+        <IonSearchbar
+          inputmode="search"
+          onIonClear={() => {
+            setSearch("");
+            setFilteredEvents(events);
+          }}
+          onIonChange={e => {
+            setSearch(e.detail.value!);
+            filter();
+          }}
+        ></IonSearchbar>
 
         {events.map(event => (
           <IonCard>
