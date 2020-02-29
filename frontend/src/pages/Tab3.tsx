@@ -20,7 +20,11 @@ const Tab3: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+<<<<<<< HEAD
           <IonTitle>Your Profile</IonTitle>
+=======
+          <IonTitle>Profile</IonTitle>
+>>>>>>> bd156f3507352727f119af806efabcc093bc3c21
         </IonToolbar>
       </IonHeader>
 
