@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonCard, IonItem, IonIcon, IonLabel, IonButton, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonList, IonImg, IonModal, IonSegment, IonSegmentButton } from '@ionic/react';
 import './Tab2.css';
 import { location, time } from 'ionicons/icons';
@@ -13,65 +13,43 @@ type Event = {
 };
 
 const Tab2: React.FC = () => {
-  var events: Event[] = [{ 
-        id: -1,
-        image: '',
-        organiser: 'null', 
-        name:'null', 
-        location:'null', 
-        time: 'null'
-      }]
-  // var events: Event[] = [
-  //   { 
-  //     id: 1,
-  //     image: 'https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg',
-  //     organiser: 'Imperial College London', 
-  //     name:'Climb Queen\'s Tower', 
-  //     location:'Queen\'s lawn', 
-  //     time: 'Sunday 1st March, 2PM'
-  //   }, 
-  //   { 
-  //     id: 2,
-  //     image: 'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F90845043%2F133544235468%2F1%2Foriginal.20200204-155442?w=1080&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C22%2C1920%2C960&s=7ba1215a5d3099cd2b2682b685deb9b8',
-  //     organiser: 'DoCSoc', 
-  //     name:'Revel', 
-  //     location:"Quaglino's", 
-  //     time: 'Monday 2nd March, 7:30PM'
-  //   },
-  //   { 
-  //     id: 3,
-  //     image: 'https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg',
-  //     organiser: 'Imperial College London', 
-  //     name:'Climb Queen\'s Tower', 
-  //     location:'Queen\'s lawn', 
-  //     time: 'Sunday 1st March, 2PM'
-  //   }
-  // ];
-  const [showModal, setShowModal] = useState(false);
-  var modalEvent: Event = events[0];
 
+  var nullEvent: Event = { 
+    id: -1,
+    image: '',
+    organiser: 'null', 
+    name:'null', 
+    location:'null', 
+    time: 'null'
+  };
+
+
+  const [modalEvent, setModalEvent] = useState(nullEvent);
+  const [showModal, setShowModal] = useState(false);
+  const [events, setEvent] = useState([nullEvent]);
+ 
   function openEvent(e: Event) {
-    modalEvent = e;
+    setModalEvent(e);
     setShowModal(true);    
   }
 
   let server = "https://5498e4a8.ngrok.io/";
 
-  function getEvents() {
+  useEffect(() => {
     fetch(server+"events/")
     .then(res => res.json())
     .then(
-      (result) => (result as Event[]).forEach(element => {
-        console.log(element.name);
-        events.push(element as Event);
+      (result) => {const eventList: Event[] = [];(result as Event[]).forEach(element => {
+        eventList.push(element as Event);
         console.log(events);
-      })
+      });
+      setEvent(eventList);
+    }
     );
-  }
+  });
 
   return (
     <IonPage>
-      {getEvents()}
       <IonHeader>
         <IonToolbar>
           <IonTitle>Events</IonTitle>
