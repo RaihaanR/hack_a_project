@@ -7,6 +7,7 @@
           "location":"Imperial College London",
           "time":"Sunday 1st March, 2PM",
           "image": "https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg",
+          "description": "Ever wondered what's the view from the top of queens tower? Come and join us to climb up to the top of queens tower for just £3! This is the one and only chance for you to have access to the top of the tower, so drop by to exercise and enjoy South Kensington's view from above!",
           "post_time": "2012-04-23T18:25:43.511Z",
           "visitors":["DoCSoc"]
        },
@@ -17,7 +18,7 @@
           "location":"Quaglino's",
           "time":"Monday 2nd March, 7:30PM",
           "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F90845043%2F133544235468%2F1%2Foriginal.20200204-155442?w=1080&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C22%2C1920%2C960&s=7ba1215a5d3099cd2b2682b685deb9b8",
-          "post_time": "2012-04-23T18:25:43.511Z",
+          "description": "A little party never killed nobody, so join RCSU and DoCSoc for an extravagant night of glitz, glam and a party fit for the 20's - here's to Roaring Revel! \n\n From Spanish rooftop bars to Parisian themed halls, we're now taking you back in time to the Prohibition era. Our chosen gin mill, Quaglino's, is decorated to the taste of the period and has a history as rich as the location of St James's.",          "post_time": "2012-04-23T18:25:43.511Z",
           "visitors":[]
        },
        {
@@ -27,6 +28,7 @@
           "location":"Sherfield Building",
           "time":"Sunday 1st March, 2pm",
           "image": "https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg",
+          "description": "Who doesn't love some karaoke",
           "post_time": "2012-04-23T18:25:43.511Z",
           "visitors":[]
        }

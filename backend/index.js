@@ -15,10 +15,10 @@ app.get('/', function (req, res) {
 app.get('/events', function (req, res) {
   fs.readFile('./data/data.json', function (err, data) {
     if (err) {
-      return res.status(500).send();
+      return res.status(500).json();
     }
 
-    return res.send(JSON.parse(data)['events']);
+    return res.status(200).json(JSON.parse(data)['events']);
   });
 });
 
@@ -27,10 +27,10 @@ app.get('/events/:id', function (req, res) {
 
   fs.readFile('./data/data.json', function (err, data) {
     if (err) {
-      return res.status(500).send();
+      return res.status(500).json({ message: "Internal server error"});
     }
 
-    return res.send(JSON.parse(data)['events'][id]);
+    return res.status(200).json(JSON.parse(data)['events'][id]);
   });
 });
 
@@ -39,7 +39,7 @@ app.post('/events', function (req, res) {
   var events = JSON.parse(data)['events'];
   var newEvent = req.body;
 
-  if (newEvent['name'] == null || newEvent['organiser'] == null || newEvent['location'] == null || newEvent['time'] == null || newEvent['image'] == null) {
+  if (newEvent['name'] == null || newEvent['organiser'] == null || newEvent['location'] == null || newEvent['time'] == null || newEvent['image'] == null || newEvent['description']) {
     return res.status(400).json({message: "Invalid event format"});
   }
 
@@ -53,17 +53,17 @@ app.post('/events', function (req, res) {
     if (err) {
       return res.status(500).json({message: "Internal server error"});
     }
-    return res.status(200).send(events);
+    return res.status(200).json(events);
   });
 });
 
 app.get('/users', function (req, res) {
   fs.readFile('./data/users.json', function (err, data) {
     if (err) {
-      return res.status(500).send();
+      return res.status(500).json({ message: "Internal server error"});
     }
     console.log(JSON.parse(data)['users'][1])
-    return res.send(JSON.parse(data)['users']);
+    return res.status(200).json(JSON.parse(data)['users']);
   });
 });
 
@@ -76,7 +76,7 @@ app.get('/users/:uname/events', function (req, res) {
 
   fs.readFile('./data/users.json', function (err, data) {
     if (err) {
-      return res.status(500).send();
+      return res.status(500).json({ message: "Internal server error"});
     }
 
     JSON.parse(data)['users'].forEach(u => {
@@ -123,6 +123,22 @@ app.post('/users', function (req, res) {
       return res.status(500).json({ message: "Internal server error"});
     }
     return res.status(200).json(users);
+  });
+});
+
+app.get('/users/:username', function (req, res) {
+  var username = req.params.username;
+
+  fs.readFile('./data/users.json', function (err, data) {
+    if (err) {
+      return res.status(500).json({ message: "Internal server error"});
+    }
+    JSON.parse(data)['users'].forEach (u => {
+      if (u['username'] === username) {
+        return res.status(200).json(u)
+      }
+    })
+    return res.status(400).json({message: "Username not found"});
   });
 });
 
