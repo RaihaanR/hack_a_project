@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/events', function (req, res) {
-  fs.readFile('./data/data.json', function (err, data) {
+  fs.readFile('./data/events.json', function (err, data) {
     if (err) {
       return res.status(500).json();
     }
@@ -25,7 +25,7 @@ app.get('/events', function (req, res) {
 app.get('/events/:id', function (req, res) {
   var id = req.params.id;
 
-  fs.readFile('./data/data.json', function (err, data) {
+  fs.readFile('./data/events.json', function (err, data) {
     if (err) {
       return res.status(500).json({ message: "Internal server error"});
     }
@@ -34,8 +34,33 @@ app.get('/events/:id', function (req, res) {
   });
 });
 
+app.get('/events/:id/users', function (req, res) {
+  var id = req.params.id;
+
+  fs.readFile('./data/events.json', function (err, data) {
+    if (err) {
+      return res.status(500).send();
+    }
+
+    fs.readFile('./data/users.json', function (err1, data1) {
+      if (err1) {
+        return res.status(500).send();
+      }
+
+      var users = [];
+      var us = JSON.parse(data1)['users'];
+
+      JSON.parse(data)['events'][id]['visitors'].forEach(uid => {
+        users.push(us[uid]['username']);
+      });
+
+      return res.send(users);
+    });
+  });
+});
+
 app.post('/events', function (req, res) {
-  var data = fs.readFileSync('./data/data.json');
+  var data = fs.readFileSync('./data/events.json');
   var events = JSON.parse(data)['events'];
   var newEvent = req.body;
 
@@ -45,11 +70,11 @@ app.post('/events', function (req, res) {
 
   events.push(newEvent);
 
-  newEvent["id"] = events.length;
-  newEvent["post_time"] = new Date();
-  newEvent["visitors"] = [];
+  newEvent['id'] = events.length;
+  newEvent['post_time'] = new Date();
+  newEvent['visitors'] = [];
 
-  fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function (err) {
+  fs.writeFile('./data/events.json', JSON.stringify({events: events}), 'utf8', function (err) {
     if (err) {
       return res.status(500).json({message: "Internal server error"});
     }
@@ -62,14 +87,10 @@ app.get('/users', function (req, res) {
     if (err) {
       return res.status(500).json({ message: "Internal server error"});
     }
-    console.log(JSON.parse(data)['users'][1])
+
     return res.status(200).json(JSON.parse(data)['users']);
   });
 });
-
-function getEventNameFromId (id) {
-  
-}
 
 app.get('/users/:uname/events', function (req, res) {
   var uname = req.params.uname;
@@ -83,14 +104,18 @@ app.get('/users/:uname/events', function (req, res) {
       if (u['username'] === uname.toString()) {
         var events = [];
 
-        fs.readFile('./data/data.json', function (err1, data1) {
+        fs.readFile('./data/events.json', function (err1, data1) {
+          if (err1) {
+            return res.status(500).send();
+          }
+
           var es = JSON.parse(data1);
 
           u['events'].forEach(id => {
             events.push(es['events'][id]);
           });
 
-          return res.json(events);
+          return res.send(events);
         });
       }
     });
@@ -122,7 +147,8 @@ app.post('/users', function (req, res) {
     if (err) {
       return res.status(500).json({ message: "Internal server error"});
     }
-    return res.status(200).json(users);
+
+    return res.status(200).send(users);
   });
 });
 
