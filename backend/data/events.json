@@ -8,10 +8,8 @@
             "name": "Climb Queens Tower",
             "organiser": "DoCSoc",
             "post_time": "2012-04-23T18:25:43.511Z",
-            "time": "Sunday 1st March, 2PM",
-            "visitors": [
-                0
-            ]
+            "time": "Sunday 1st March, 2:00PM",
+            "visitors": []
         },
         {
             "description": "A little party never killed nobody, so join RCSU and DoCSoc for an extravagant night of glitz, glam and a party fit for the 20's - here's to Roaring Revel! \n\n From Spanish rooftop bars to Parisian themed halls, we're now taking you back in time to the Prohibition era. Our chosen gin mill, Quaglino's, is decorated to the taste of the period and has a history as rich as the location of St James's.",
@@ -32,17 +30,40 @@
             "name": "Karaoke",
             "organiser": "DoCSoc",
             "post_time": "2012-04-23T18:25:43.511Z",
-            "time": "Sunday 1st March, 2pm",
+            "time": "Tuesday 3rd March, 2:00pm",
             "visitors": []
         },
         {
+            "description": "Come and dance with us",
+            "id": 3,
+            "image": "https://media.istockphoto.com/photos/empty-dance-studio-picture-id120906032?k=6&m=120906032&s=612x612&w=0&h=FcNMiV0TlMtWlfxZkUfP4RHUXzvS3m2TqukVgkE8Hx4=",
+            "location": "Dance Studio",
+            "name": "Dancing",
+            "organiser": "Dance Society",
+            "post_time": "2012-04-23T18:25:43.511Z",
+            "time": "Friday 6th March, 7:00pm",
+            "visitors": []
+        },
+        {
+            "description": "Show off your athletic prowess",
             "id": 4,
-            "image": "test",
-            "location": "huxley",
-            "name": "test",
-            "organiser": "tester",
-            "post_time": "2020-02-29T15:41:37.213Z",
-            "time": "Tomorrow",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/9/9d/All-weather_running_track.jpg",
+            "location": "Outdoor Track",
+            "name": "Athletics Society Tryouts",
+            "organiser": "Athletics Society",
+            "post_time": "2012-04-23T18:25:43.511Z",
+            "time": "Saturday 7th March, 5:00pm",
+            "visitors": []
+        },
+        {
+            "description": "Learn about front-end and back-end design for web applications",
+            "id": 5,
+            "image": "https://reactjs.org/logo-og.png",
+            "location": "Computing Lab",
+            "name": "Learn Web",
+            "organiser": "Programming Society",
+            "post_time": "2012-04-23T18:25:43.511Z",
+            "time": "Monday 9th March, 6:00pm",
             "visitors": []
         }
     ]
