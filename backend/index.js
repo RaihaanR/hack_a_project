@@ -310,6 +310,9 @@ app.get('/events/:eventId/:userId', function (req, res) {
     var found = false;
 
     users[userId]['events'].forEach(id => {
+      if (found) {
+        return
+      }
       if (id === eventId) {
         found = true;
         return res.send("yes");
