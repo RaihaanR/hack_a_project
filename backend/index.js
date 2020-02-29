@@ -66,6 +66,10 @@ app.get('/users', function (req, res) {
   });
 });
 
+function getEventNameFromId (id) {
+  
+}
+
 app.get('/users/:uname/events', function (req, res) {
   var uname = req.params.uname;
 
@@ -76,7 +80,17 @@ app.get('/users/:uname/events', function (req, res) {
 
     JSON.parse(data)['users'].forEach(u => {
       if (u['username'] === uname.toString()) {
-        return res.send(u['events']);
+        var names = [];
+
+        fs.readFile('./data/data.json', function (err1, data1) {
+          var es = JSON.parse(data1);
+
+          u['events'].forEach(id => {
+            names.push(es['events'][id - 1]['name']);
+          });
+
+          return res.json(names);
+        });
       }
     });
   });
