@@ -26,13 +26,36 @@ const Tab2: React.FC = () => {
   };
 
 
+  const [search, setSearch] = useState("");
+
   const [modalEvent, setModalEvent] = useState(nullEvent);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([nullEvent]);
+  const [filteredEvents, setFilteredEvents] = useState(events);
  
   function openEvent(e: Event) {
     setModalEvent(e);
     setShowModal(true);    
+  }
+
+  function filter() {
+    console.log(search);
+    if (search === "") {
+      setFilteredEvents(events);
+    } else {
+      const eventList: Event[] = [];
+        events.forEach(event => {
+          if (event.name.toLowerCase().startsWith(search.toLowerCase())) {
+            eventList.push(event);
+          }
+          console.log(events);
+        });
+        if (eventList.length > 0) {
+          setFilteredEvents(eventList);
+        } else {
+          setFilteredEvents(events);
+        }
+    }
   }
 
   let server = "https://5498e4a8.ngrok.io/";
@@ -48,6 +71,7 @@ const Tab2: React.FC = () => {
           console.log(events);
         });
         setEvent(eventList);
+        setFilteredEvents(events);
       }
     );
   }, [events.length]);
@@ -67,7 +91,7 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar></IonSearchbar>
+        <IonSearchbar inputmode="search" onIonClear={() => {setSearch(""); setFilteredEvents(events)}} onIonChange={e => {setSearch(e.detail.value!); filter()}}></IonSearchbar>
 
         <IonModal isOpen={showModal}>
         <IonCard>
@@ -102,7 +126,7 @@ const Tab2: React.FC = () => {
         </IonModal>
 
   
-        {events.map(event => (
+        {filteredEvents.map(event => (
           <IonCard onClick={() => openEvent(event)}>
           <IonImg src={event.image} />
             <IonCardHeader>
