@@ -107,8 +107,14 @@ app.post('/events', function (req, res) {
   var data = fs.readFileSync('./data/events.json');
   var events = JSON.parse(data)['events'];
   var newEvent = req.body;
-
-  if (newEvent['name'] == null || newEvent['organiser'] == null || newEvent['location'] == null || newEvent['time'] == null || newEvent['image'] == null || newEvent['description']) {
+  console.log(newEvent['name'])
+  console.log(newEvent['organiser'])
+  console.log(newEvent['location'])
+  console.log(newEvent['time'])
+  console.log(newEvent['image'])
+  console.log(newEvent['description'])
+  if (newEvent['name'] === null || newEvent['organiser'] === null || newEvent['location'] === null || newEvent['time'] === null || newEvent['image'] === null || newEvent['description'] === null) {
+    console.log("why")
     return res.status(400).send("Invalid event format");
   }
 
@@ -179,7 +185,7 @@ app.post('/users', function (req, res) {
   var users = JSON.parse(data)['users'];
   var newUser = req.body;
 
-  console.log(newUser);
+  console.log("adding");
 
   if (newUser['username'] == null) {
     return res.status(400).send("Invalid user format");
@@ -214,7 +220,7 @@ app.post('/users', function (req, res) {
 
 app.get('/users/:username', function (req, res) {
   var username = req.params.username;
-
+  console.log("getting username")
   fs.readFile('./data/users.json', function (err, data) {
     if (err) {
       return res.sendStatus(500);
@@ -236,6 +242,7 @@ app.get('/users/:username', function (req, res) {
 });
 
 app.post('/usersGoing/', function (req, res) {
+  console.log("users going updating")
   var data = fs.readFileSync('./data/users.json');
   var users = JSON.parse(data)['users'];
   data = fs.readFileSync('./data/events.json');
@@ -264,10 +271,7 @@ app.post('/usersGoing/', function (req, res) {
   foundUser['events'].push(parseInt(reqBody['event_id']))
 
   events.forEach(event => {
-    console.log(event['id'])
-    console.log(parseInt(reqBody['event_id']))
     if (event['id'] === parseInt(reqBody['event_id'])) {
-      console.log("okkkkk")
       foundEvent = event
     }
   });
@@ -292,7 +296,72 @@ app.post('/usersGoing/', function (req, res) {
   });
 });
 
+
+app.post('/usersNotGoing/', function (req, res) {
+  console.log("users not going updating")
+  
+
+  var data = fs.readFileSync('./data/users.json');
+  var users = JSON.parse(data)['users'];
+  data = fs.readFileSync('./data/events.json');
+  var events = JSON.parse(data)['events'];
+  var reqBody = req.body;
+  console.log(reqBody);
+
+  if (reqBody['user_id'] == null || reqBody["event_id"] == null) {
+    return res.status(400).send("User id/event_id is null");
+  }
+
+  var foundUser = null;
+  var foundEvent = null;
+
+  users.forEach(user => {
+    if (user['id'] === parseInt(reqBody['user_id'])) {
+      foundUser = user
+    }
+  });
+
+  if (foundUser === null) {
+    return res.status(400).send("User id not found");
+  }
+  console.log(parseInt(reqBody['event_id']))
+  console.log("hello")
+
+  console.log(foundUser['events'])
+  foundUser['events'] = foundUser['events'].filter(function(item) {
+    return item !== parseInt(reqBody['event_id'])
+  })
+  console.log(foundUser['events'])
+  events.forEach(event => {
+    if (event['id'] === parseInt(reqBody['event_id'])) {
+      foundEvent = event
+    }
+  });
+  
+  if (foundEvent === null) {
+    return res.status(400).send("Event id not found");
+  }
+
+  console.log(foundEvent['visitors'])
+  foundEvent['visitors'] = foundEvent['visitors'].filter(function(item) {return item !== parseInt(reqBody['user_id'])})
+  console.log(foundEvent['visitors'])
+  fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
+    if (err) {
+      return res.sendStatus(500);
+    };
+
+    fs.writeFile('./data/events.json', JSON.stringify({events: events}), 'utf8', function (err) {
+      if (err) {
+        return res.sendStatus(500);
+      }
+
+      return res.send(users);
+    });
+  });
+});
+
 app.get('/events/:eventId/:userId', function (req, res) {
+  console.log("event get specific")
   var eventId = parseInt(req.params.eventId);
   var userId = parseInt(req.params.userId);
 
