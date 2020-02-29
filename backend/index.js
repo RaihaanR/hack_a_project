@@ -46,7 +46,7 @@ app.post('/events', function (req, res) {
   newEvent["post_time"] = new Date();
   newEvent["visitors"] = [];
 
-  fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function(err) {
+  fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function (err) {
     if (err) {
       return res.status(500).json({message: "Internal server format"});
     }
@@ -81,13 +81,13 @@ app.post('/users', function (req, res) {
   newUser['id'] = users.length;
   newUser['events'] = [];
 
-  fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function(err) {
+  fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
       return res.status(500).json({ message: "Internal server format"});
     }
+
     return res.status(200).send(users);
   });
 });
 
 app.listen(port)
-
