@@ -1,1 +1,1 @@
-{"users":[{"events":[],"id":0,"username":"DoCSoc"},{"events":[],"id":1,"username":"TestUser1"}]}
+{"users":[{"events":[],"id":0,"username":"DoCSoc"},{"events":[1,1],"id":1,"username":"TestUser1"}]}

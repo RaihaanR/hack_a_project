@@ -179,7 +179,7 @@ app.post('/users', function (req, res) {
   var users = JSON.parse(data)['users'];
   var newUser = req.body;
 
-  console.log(newUser);
+  console.log("adding");
 
   if (newUser['username'] == null) {
     return res.status(400).send("Invalid user format");
@@ -214,7 +214,7 @@ app.post('/users', function (req, res) {
 
 app.get('/users/:username', function (req, res) {
   var username = req.params.username;
-
+  console.log("getting username")
   fs.readFile('./data/users.json', function (err, data) {
     if (err) {
       return res.sendStatus(500);
@@ -236,6 +236,7 @@ app.get('/users/:username', function (req, res) {
 });
 
 app.post('/usersGoing/', function (req, res) {
+  console.log("users going updating")
   var data = fs.readFileSync('./data/users.json');
   var users = JSON.parse(data)['users'];
   data = fs.readFileSync('./data/events.json');
@@ -264,10 +265,7 @@ app.post('/usersGoing/', function (req, res) {
   foundUser['events'].push(parseInt(reqBody['event_id']))
 
   events.forEach(event => {
-    console.log(event['id'])
-    console.log(parseInt(reqBody['event_id']))
     if (event['id'] === parseInt(reqBody['event_id'])) {
-      console.log("okkkkk")
       foundEvent = event
     }
   });
@@ -294,12 +292,14 @@ app.post('/usersGoing/', function (req, res) {
 
 
 app.post('/usersNotGoing/', function (req, res) {
+  console.log("users not going updating")
+  
+
   var data = fs.readFileSync('./data/users.json');
   var users = JSON.parse(data)['users'];
   data = fs.readFileSync('./data/events.json');
   var events = JSON.parse(data)['events'];
   var reqBody = req.body;
-
   console.log(reqBody);
 
   if (reqBody['user_id'] == null || reqBody["event_id"] == null) {
@@ -318,9 +318,13 @@ app.post('/usersNotGoing/', function (req, res) {
   if (foundUser === null) {
     return res.status(400).send("User id not found");
   }
-  console.log(foundUser['events'])
   console.log(parseInt(reqBody['event_id']))
-  foundUser['events'] = foundUser['events'].filter(function(item) {item !== parseInt(reqBody['event_id'])})
+  console.log("hello")
+
+  console.log(foundUser['events'])
+  foundUser['events'] = foundUser['events'].filter(function(item) {
+    return item !== parseInt(reqBody['event_id'])
+  })
   console.log(foundUser['events'])
   events.forEach(event => {
     if (event['id'] === parseInt(reqBody['event_id'])) {
@@ -331,9 +335,9 @@ app.post('/usersNotGoing/', function (req, res) {
   if (foundEvent === null) {
     return res.status(400).send("Event id not found");
   }
+
   console.log(foundEvent['visitors'])
-  parseInt(reqBody['user_id'])
-  foundEvent['visitors'] = foundEvent['visitors'].filter(function(item) {item !== parseInt(reqBody['user_id'])})
+  foundEvent['visitors'] = foundEvent['visitors'].filter(function(item) {return item !== parseInt(reqBody['user_id'])})
   console.log(foundEvent['visitors'])
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
@@ -351,6 +355,7 @@ app.post('/usersNotGoing/', function (req, res) {
 });
 
 app.get('/events/:eventId/:userId', function (req, res) {
+  console.log("event get specific")
   var eventId = parseInt(req.params.eventId);
   var userId = parseInt(req.params.userId);
 
