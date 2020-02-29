@@ -3,30 +3,45 @@
        {
           "id":1,
           "name":"Climb Queens Tower",
-          "organiser":"John Doe",
+          "organiser":2,
           "location":"Imperial College London",
           "time":"Sunday 1st March, 2PM",
           "image": "https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg",
-          "post_time": "2012-04-23T18:25:43.511Z"
+          "post_time": "2012-04-23T18:25:43.511Z",
+          "visitors":[]
        },
        {
           "id":2,
           "name":"Revel",
-          "organiser":"DoCSoc",
+          "organiser":1,
           "location":"Quaglino's",
           "time":"Monday 2nd March, 7:30PM",
           "image": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F90845043%2F133544235468%2F1%2Foriginal.20200204-155442?w=1080&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C22%2C1920%2C960&s=7ba1215a5d3099cd2b2682b685deb9b8",
-          "post_time": "2012-04-23T18:25:43.511Z"
+          "post_time": "2012-04-23T18:25:43.511Z",
+          "visitors":[]
        },
        {
           "id":3,
           "name":"Karaoke",
-          "organiser":"Steve",
+          "organiser":1,
           "location":"Sherfield Building",
           "time":"Sunday 1st March, 2pm",
           "image": "https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg",
-          "post_time": "2012-04-23T18:25:43.511Z"
+          "post_time": "2012-04-23T18:25:43.511Z",
+          "visitors":[]
        }
+    ],
+    "user":[
+        {
+            "id":1,
+            "username":"admin",
+            "events":[]
+        },
+        {
+            "id":2,
+            "username":"devesh",
+            "events":[]
+        }
     ]
  }
 
