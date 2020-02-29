@@ -243,15 +243,15 @@ app.post('/usersGoing/', function (req, res) {
 
   console.log(reqBody);
 
-  if (reqBody['username'] == null) {
-    return res.status(400).send("Username not found");
+  if (reqBody['user_id'] == null || reqBody["event_id"] == null) {
+    return res.status(400).send("User id/event_id is null");
   }
 
   var foundUser = null;
   var foundEvent = null;
 
   users.forEach(user => {
-    if (user['id'] === reqBody['user_id']) {
+    if (user['id'] === parseInt(reqBody['user_id'])) {
       foundUser = user
     }
   });
@@ -260,10 +260,13 @@ app.post('/usersGoing/', function (req, res) {
     return res.status(400).send("User id not found");
   }
 
-  foundUser['events'].push(reqBody['event_id'])
+  foundUser['events'].push(parseInt(reqBody['event_id']))
 
   events.forEach(event => {
-    if (events['id'] === reqBody['event_id']) {
+    console.log(event['id'])
+    console.log(parseInt(reqBody['event_id']))
+    if (event['id'] === parseInt(reqBody['event_id'])) {
+      console.log("okkkkk")
       foundEvent = event
     }
   });
@@ -271,7 +274,7 @@ app.post('/usersGoing/', function (req, res) {
   if (foundEvent === null) {
     return res.status(400).send("Event id not found");
   }
-  foundEvent['visitor'].push(reqBody['user_id'])
+  foundEvent['visitors'].push(parseInt(reqBody['user_id']))
 
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
