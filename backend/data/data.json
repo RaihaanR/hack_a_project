@@ -1,8 +1,8 @@
 {
     "next_id":4,
     "events": [
-      {"id":1, "name":"Birthday", "organizer":"John Doe", "time":"2012-04-23T18:25:43.511Z"},
-      {"id":2, "name":"Sleepover", "organizer":"Bob", "time":"2012-04-23T18:25:43.511Z"},
-      {"id":3, "name":"Karaoke", "organizer":"Steve", "time":"2012-04-23T18:25:43.511Z"}
+      {"id":1, "name":"Birthday", "organizer":"John Doe", "location":"Huxley Building", "time":"2012-04-23T18:25:43.511Z"},
+      {"id":2, "name":"Sleepover", "organizer":"Bob", "location":"Skempton Building", "time":"2012-04-23T18:25:43.511Z"},
+      {"id":3, "name":"Karaoke", "organizer":"Steve", "location":"Sherfield Building", "time":"2012-04-23T18:25:43.511Z"}
     ]
 }
