@@ -30,7 +30,7 @@ app.get('/events/:id', function (req, res) {
       return res.sendStatus(500);
     }
 
-    var events = JSON.parse(data)['values'];
+    var events = JSON.parse(data)['events'];
 
     if (id >= events.length) {
       return res.status(400).send("Event not found");
@@ -81,6 +81,7 @@ app.get('/events/:id/getUsers', function (req, res) {
       var users = [];
       var es = JSON.parse(data)['events'];
       var us = JSON.parse(data1)['users'];
+
       if (id >= es.length) {
         return res.status(400).send("Event not found");
       }
@@ -251,8 +252,13 @@ app.post('/usersGoing/', function (req, res) {
   var foundEvent = null;
 
   users.forEach(user => {
+<<<<<<< HEAD
     if (user['id'] === parseInt(reqBody['user_id'])) {
       foundUser = user
+=======
+    if (user['id'] === reqBody['user_id']) {
+      foundUser = user;
+>>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
     }
   });
 
@@ -260,6 +266,7 @@ app.post('/usersGoing/', function (req, res) {
     return res.status(400).send("User id not found");
   }
 
+<<<<<<< HEAD
   foundUser['events'].push(parseInt(reqBody['event_id']))
 
   events.forEach(event => {
@@ -268,24 +275,68 @@ app.post('/usersGoing/', function (req, res) {
     if (event['id'] === parseInt(reqBody['event_id'])) {
       console.log("okkkkk")
       foundEvent = event
+=======
+  foundUser['events'].push(reqBody['event_id']);
+
+  events.forEach(event => {
+    if (events['id'] === reqBody['event_id']) {
+      foundEvent = event;
+>>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
     }
   });
   
   if (foundEvent === null) {
     return res.status(400).send("Event id not found");
   }
+<<<<<<< HEAD
   foundEvent['visitors'].push(parseInt(reqBody['user_id']))
+=======
+
+  foundEvent['visitor'].push(reqBody['user_id']);
+>>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
 
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
       return res.sendStatus(500);
     };
+
     fs.writeFile('./data/events.json', JSON.stringify({events: events}), 'utf8', function (err) {
       if (err) {
         return res.sendStatus(500);
       }
+
       return res.send(users);
     });
+  });
+});
+
+app.get('/events/:eventId/:userId', function (req, res) {
+  var eventId = parseInt(req.params.eventId);
+  var userId = parseInt(req.params.userId);
+
+  fs.readFile('./data/users.json', function (err, data) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+
+    var users = JSON.parse(data)['users'];
+
+    if (userId >= users.length) {
+      return res.status(400).send("User not found");
+    }
+
+    var found = false;
+
+    users[userId]['events'].forEach(id => {
+      if (id === eventId) {
+        found = true;
+        return res.send("yes");
+      }
+    });
+
+    if (!found) {
+      return res.send("no");
+    }
   });
 });
 
