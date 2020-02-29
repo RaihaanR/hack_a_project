@@ -53,6 +53,7 @@ app.post('/events', function (req, res) {
     if (err) {
       return res.status(500).json({message: "Internal server error"});
     }
+
     return res.status(200).send(events);
   });
 });
@@ -62,14 +63,10 @@ app.get('/users', function (req, res) {
     if (err) {
       return res.status(500).send();
     }
-    console.log(JSON.parse(data)['users'][1])
+
     return res.send(JSON.parse(data)['users']);
   });
 });
-
-function getEventNameFromId (id) {
-  
-}
 
 app.get('/users/:uname/events', function (req, res) {
   var uname = req.params.uname;
@@ -90,7 +87,7 @@ app.get('/users/:uname/events', function (req, res) {
             events.push(es['events'][id]);
           });
 
-          return res.json(events);
+          return res.send(events);
         });
       }
     });
@@ -122,7 +119,8 @@ app.post('/users', function (req, res) {
     if (err) {
       return res.status(500).json({ message: "Internal server error"});
     }
-    return res.status(200).json(users);
+
+    return res.status(200).send(users);
   });
 });
 
