@@ -132,9 +132,10 @@ app.get('/users/:uname/events', function (req, res) {
     if (err) {
       return res.sendStatus(500);
     }
-
+    var found = false
     JSON.parse(data)['users'].forEach(u => {
       if (u['username'] === uname.toString()) {
+        found = true
         var events = [];
 
         fs.readFile('./data/events.json', function (err1, data1) {
@@ -148,10 +149,13 @@ app.get('/users/:uname/events', function (req, res) {
             events.push(es['events'][id]);
           });
 
-          return res.send(events);
+          return res.json(events);
         });
       }
     });
+    if (!found) {
+      return res.status(400).send("Username not found");
+    }
   });
 });
 
@@ -165,12 +169,16 @@ app.post('/users', function (req, res) {
   if (newUser['username'] == null) {
     return res.status(400).send("Invalid event format");
   }
-
+  flag = false
   users.forEach(user => {
     if (user['username'] === newUser['username']) {
+      flag = true
       return res.status(400).send("Username is already taken");
     }
   });
+  if (flag) {
+    return;
+  }
 
   users.push(newUser);
 
@@ -193,14 +201,17 @@ app.get('/users/:username', function (req, res) {
     if (err) {
       return res.sendStatus(500);
     }
-
+    var found = false
     JSON.parse(data)['users'].forEach (u => {
       if (u['username'] === username) {
-        return res.send(u);
+        found = true
+        return res.status(200).json(u);
       }
     });
 
-    return res.status(400).send("Username not found");
+    if (!found) {
+      return res.status(400).send("Username not found");
+    }
   });
 });
 
