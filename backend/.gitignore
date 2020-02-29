@@ -107,7 +107,7 @@ dist/
 tmp/
 temp/
 
-data/
+backend/data/
 
 *.swp
 
