@@ -30,7 +30,7 @@ app.get('/events/:id', function (req, res) {
       return res.sendStatus(500);
     }
 
-    var events = JSON.parse(data)['values'];
+    var events = JSON.parse(data)['events'];
 
     if (id >= events.length) {
       return res.status(400).send("Event not found");
@@ -287,6 +287,36 @@ app.post('/usersGoing/', function (req, res) {
 
       return res.send(users);
     });
+  });
+});
+
+app.get('/events/:eventId/:userId', function (req, res) {
+  var eventId = parseInt(req.params.eventId);
+  var userId = parseInt(req.params.userId);
+
+  fs.readFile('./data/users.json', function (err, data) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+
+    var users = JSON.parse(data)['users'];
+
+    if (userId >= users.length) {
+      return res.status(400).send("User not found");
+    }
+
+    var found = false;
+
+    users[userId]['events'].forEach(id => {
+      if (id === eventId) {
+        found = true;
+        return res.send("yes");
+      }
+    });
+
+    if (!found) {
+      return res.send("no");
+    }
   });
 });
 
