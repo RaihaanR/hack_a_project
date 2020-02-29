@@ -43,18 +43,67 @@ const Tab2: React.FC = () => {
     time: "null"
   };
 
+  const userId = 0;
+
   const [search, setSearch] = useState("");
 
   const [modalEvent, setModalEvent] = useState(nullEvent);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([nullEvent]);
   const [filteredEvents, setFilteredEvents] = useState(events);
-  const [going, setGoing] = useState("null");
-
+  const [whosGoing, setWhosGoing] = useState("null");
+  const [userIsGoing, setIsGoing] = useState("");
+ 
   function openEvent(e: Event) {
-    getGoing(e.id);
+    getWhosGoing(e.id);
+    getIsGoing(e.id);
     setModalEvent(e);
     setShowModal(true);
+  }
+
+
+  function userIsGoingToEvent(e: number) {
+    fetch(server + "usersGoing", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId.toString(),
+        event_id: e.toString(),
+      })
+    })
+
+  }
+
+  function userNotGoingToEvent(e: number) {
+    fetch(server + "usersNotGoing", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId.toString(),
+        event_id: e.toString(),
+      })
+    })
+
+  }
+
+  function updateEventStatus(v: string, e: number) {
+    setIsGoing(v);
+    if (v === "yes") {
+      userIsGoingToEvent(e);
+    } else {
+      userNotGoingToEvent(e);
+    }
+  }
+
+  function getIsGoing(id: number) {
+    fetch(server+"events/" + id + "/" + userId)
+    .then(res => res.text().then(v => setIsGoing(v)))
   }
 
   function filter() {
@@ -79,11 +128,9 @@ const Tab2: React.FC = () => {
 
   let server = "https://5498e4a8.ngrok.io/";
 
-  function getGoing(id: number) {
-    console.log(id);
-    fetch(server + "events/" + id + "/getUsers/").then(res =>
-      res.text().then(v => setGoing(v))
-    );
+  function getWhosGoing(id: number) {
+    fetch(server+"events/" + id + "/getUsers/")
+    .then(res => res.text().then(v => setWhosGoing(v)))
   }
 
   useEffect(() => {
@@ -137,23 +184,18 @@ const Tab2: React.FC = () => {
             <IonCardContent>{modalEvent.description}</IonCardContent>
 
             <IonCardContent>
-              <IonIcon icon={location} /> {modalEvent.location} <br />
-              <IonIcon icon={time} /> {modalEvent.time} <br />
-              <IonIcon icon={person} /> {going}
+            <IonIcon icon={location} /> {modalEvent.location} <br/>
+            <IonIcon icon={time} /> {modalEvent.time} <br/>
+            <IonIcon icon={person} /> {whosGoing}
             </IonCardContent>
 
             <IonCardContent>
-              <IonSegment
-                value="no"
-                onIonChange={e =>
-                  console.log("Segment selected", e.detail.value)
-                }
-              >
-                <IonSegmentButton value="going">
+              <IonSegment value={userIsGoing} onIonChange={e => updateEventStatus(e.detail.value!, modalEvent.id)}>
+                <IonSegmentButton value="yes">
                   <IonLabel>Going</IonLabel>
                 </IonSegmentButton>
                 <IonSegmentButton value="no">
-                  <IonLabel>No</IonLabel>
+                  <IonLabel>Not Going</IonLabel>
                 </IonSegmentButton>
               </IonSegment>
             </IonCardContent>
