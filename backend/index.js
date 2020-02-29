@@ -22,6 +22,7 @@ app.get('/events', function (req, res) {
 
 app.get('/events/:id', function (req, res) {
   var id = req.params.id;
+
   fs.readFile('./data/data.json', function (err, data) {
     if (err) {
       return res.status(500).send();
@@ -65,6 +66,22 @@ app.get('/users', function (req, res) {
   });
 });
 
+app.get('/users/:uname/events', function (req, res) {
+  var uname = req.params.uname;
+
+  fs.readFile('./data/users.json', function (err, data) {
+    if (err) {
+      return res.status(500).send();
+    }
+
+    JSON.parse(data)['users'].forEach(u => {
+      if (u['username'] === uname.toString()) {
+        return res.send(u['events']);
+      }
+    });
+  });
+});
+
 app.post('/users', function (req, res) {
   var data = fs.readFileSync('./data/users.json');
   var users = JSON.parse(data)['users'];
@@ -90,4 +107,4 @@ app.post('/users', function (req, res) {
   });
 });
 
-app.listen(port)
+app.listen(port);
