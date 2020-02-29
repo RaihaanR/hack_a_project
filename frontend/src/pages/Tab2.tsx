@@ -17,10 +17,11 @@ import {
   IonImg,
   IonModal,
   IonSegment,
-  IonSegmentButton
+  IonSegmentButton,
+  IonChip
 } from "@ionic/react";
 import "./Tab2.css";
-import { location, time, person } from "ionicons/icons";
+import { location, time, person, pin } from "ionicons/icons";
 
 type Event = {
   id: number;
@@ -30,17 +31,19 @@ type Event = {
   location: string;
   description: string;
   time: string;
+  tags: string[];
 };
 
 const Tab2: React.FC = () => {
   var nullEvent: Event = {
     id: -1,
-    image: "",
-    organiser: "null",
-    name: "null",
-    location: "null",
-    description: "null",
-    time: "null"
+    image: "https://shilohplainfield.org/images/Blank-photo-small.png",
+    organiser: "",
+    name: "",
+    location: "",
+    description: "",
+    time: "",
+    tags: []
   };
 
   const userId = 0;
@@ -78,7 +81,7 @@ const Tab2: React.FC = () => {
   }
 
   function userNotGoingToEvent(e: number) {
-    fetch(server + "usersNotGoing", {
+    fetch(server + "usersNotGoing/", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -181,13 +184,17 @@ const Tab2: React.FC = () => {
               <IonCardTitle>{modalEvent.name}</IonCardTitle>
             </IonCardHeader>
 
-            <IonCardContent>{modalEvent.description}</IonCardContent>
-
             <IonCardContent>
-            <IonIcon icon={location} /> {modalEvent.location} <br/>
-            <IonIcon icon={time} /> {modalEvent.time} <br/>
-            <IonIcon icon={person} /> {whosGoing}
+              {modalEvent.description} <br/>
+              <IonIcon icon={location} /> {modalEvent.location} <br/>
+              <IonIcon icon={time} /> {modalEvent.time} <br/>
+              <IonIcon icon={person} /> {whosGoing} <br/>
+              <IonIcon icon={pin} />
+              {modalEvent.tags.map(tag => (
+                  <IonChip>{tag}</IonChip>
+              ))}
             </IonCardContent>
+
 
             <IonCardContent>
               <IonSegment value={userIsGoing} onIonChange={e => updateEventStatus(e.detail.value!, modalEvent.id)}>
@@ -198,6 +205,7 @@ const Tab2: React.FC = () => {
                   <IonLabel>Not Going</IonLabel>
                 </IonSegmentButton>
               </IonSegment>
+
             </IonCardContent>
           </IonCard>
 
