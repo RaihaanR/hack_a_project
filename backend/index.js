@@ -60,7 +60,7 @@ app.get('/events/:id/users', function (req, res) {
 });
 
 app.get('/events/:id/getUsers', function (req, res) {
-  var id = req.params.id;
+  var id = parseInt(req.params.id);
 
   fs.readFile('./data/events.json', function (err, data) {
     if (err) {
@@ -74,7 +74,11 @@ app.get('/events/:id/getUsers', function (req, res) {
 
       var users = [];
       var us = JSON.parse(data1)['users'];
-
+      var es = JSON.parse(data)['events']
+      
+      if (id >= es.length) {
+        return res.status(400).send("Even id not found")
+      }
       JSON.parse(data)['events'][id]['visitors'].forEach(uid => {
         users.push(us[uid]['username']);
       });
@@ -170,7 +174,7 @@ app.post('/users', function (req, res) {
   console.log(newUser);
 
   if (newUser['username'] == null) {
-    return res.status(400).send("Invalid event format");
+    return res.status(400).send("Invalid user format");
   }
 
   var found = false;
@@ -220,6 +224,46 @@ app.get('/users/:username', function (req, res) {
     if (!found) {
       return res.status(400).send("Username not found");
     }
+  });
+});
+
+app.post('/usersGoing/', function (req, res) {
+  var data = fs.readFileSync('./data/users.json');
+  var users = JSON.parse(data)['users'];
+  data = fs.readFileSync('./data/events.json');
+  var events = JSON.parse(data)['events'];
+  var reqBody = req.body;
+
+  console.log(reqBody);
+
+  if (reqBody['username'] == null) {
+    return res.status(400).send("Username not found");
+  }
+
+  var foundUser = null;
+
+  users.forEach(user => {
+    if (user['id'] === reqBody['user_id']) {
+      foundUser = user
+    }
+  });
+
+  if (foundUser === null) {
+    return res.status(400).send("Username not found");
+  }
+  console.log(foundUser['events'])
+  foundUser['events'].push(reqBody['event_id'])
+
+  fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+
+    JSON.parse(data)['events'][id]['visitors'].forEach(uid => {
+      users.push(us[uid]['username']);
+    });
+
+    return res.send(users);
   });
 });
 
