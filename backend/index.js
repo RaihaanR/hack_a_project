@@ -98,7 +98,7 @@ app.post('/events', function (req, res) {
   var newEvent = req.body;
 
   if (newEvent['name'] == null || newEvent['organiser'] == null || newEvent['location'] == null || newEvent['time'] == null || newEvent['image'] == null || newEvent['description']) {
-    return res.status(400).json({message: "Invalid event format"});
+    return res.status(400).send("Invalid event format");
   }
 
   events.push(newEvent);
@@ -163,12 +163,12 @@ app.post('/users', function (req, res) {
   console.log(newUser);
 
   if (newUser['username'] == null) {
-    return res.status(400).json("Invalid event format");
+    return res.status(400).send("Invalid event format");
   }
 
   users.forEach(user => {
     if (user['username'] === newUser['username']) {
-      return res.status(400).json("Username is already taken");
+      return res.status(400).send("Username is already taken");
     }
   });
 
@@ -200,7 +200,7 @@ app.get('/users/:username', function (req, res) {
       }
     });
 
-    return res.status(400).json("Username not found");
+    return res.status(400).send("Username not found");
   });
 });
 
