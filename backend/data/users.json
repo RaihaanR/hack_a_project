@@ -1,0 +1,14 @@
+{
+    "users":[
+        {
+            "id":1,
+            "username":"DocSoc",
+            "events":[]
+        },
+        {
+            "id":2,
+            "username":"devesh",
+            "events":[]
+        }
+    ]
+}
