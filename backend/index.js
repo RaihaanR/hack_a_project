@@ -24,13 +24,13 @@ app.post('/events', function (req, res) {
   var data = fs.readFileSync('./data/data.json');
   var events = JSON.parse(data)["events"];
   var newEvent = req.body;
-  if (newEvent["name"] == null || newEvent["organizer"] == null || newEvent["location"] == null) {
+  if (newEvent["name"] == null || newEvent["organiser"] == null || newEvent["location"] == null || newEvent["time"] == null || newEvent["image"] == null) {
     return res.status(400).send({ message: "Invalid event format"})
   }
   console.log(events)
   events.push(newEvent)
   newEvent["id"] = events.length
-  newEvent["time"] = new Date()
+  newEvent["post_time"] = new Date()
 
   fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function(err){
     if (err) {
