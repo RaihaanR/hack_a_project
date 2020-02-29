@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import {
   IonContent,
@@ -21,6 +22,12 @@ import {
 } from "@ionic/react";
 import "./Tab2.css";
 import { location, time } from "ionicons/icons";
+=======
+import React, { useState, useEffect } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonCard, IonIcon, IonLabel, IonButton, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonImg, IonModal, IonSegment, IonSegmentButton } from '@ionic/react';
+import './Tab2.css';
+import { location, time, person } from 'ionicons/icons';
+>>>>>>> origin/explore_page
 
 type Event = {
   id: number;
@@ -43,16 +50,56 @@ const Tab2: React.FC = () => {
     time: "null"
   };
 
+<<<<<<< HEAD
   const [modalEvent, setModalEvent] = useState(nullEvent);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([nullEvent]);
 
+=======
+
+  const [search, setSearch] = useState("");
+
+  const [modalEvent, setModalEvent] = useState(nullEvent);
+  const [showModal, setShowModal] = useState(false);
+  const [events, setEvent] = useState([nullEvent]);
+  const [filteredEvents, setFilteredEvents] = useState(events);
+  const [going, setGoing] = useState("null");
+ 
+>>>>>>> origin/explore_page
   function openEvent(e: Event) {
+    getGoing(e.id)
     setModalEvent(e);
     setShowModal(true);
   }
 
+  function filter() {
+    console.log(search);
+    if (search === "") {
+      setFilteredEvents(events);
+    } else {
+      const eventList: Event[] = [];
+        events.forEach(event => {
+          if (event.name.toLowerCase().startsWith(search.toLowerCase())) {
+            eventList.push(event);
+          }
+          console.log(events);
+        });
+        if (eventList.length > 0) {
+          setFilteredEvents(eventList);
+        } else {
+          setFilteredEvents(events);
+        }
+    }
+  }
+
   let server = "https://5498e4a8.ngrok.io/";
+
+  function getGoing(id: number) {
+    console.log(id);
+    fetch(server+"events/" + id + "/getUsers/")
+    .then(res => res.text().then(v => setGoing(v)))
+  }
+  
 
   useEffect(() => {
     fetch(server + "events/")
@@ -61,10 +108,15 @@ const Tab2: React.FC = () => {
         const eventList: Event[] = [];
         (result as Event[]).forEach(element => {
           eventList.push(element);
-          console.log(events);
         });
         setEvent(eventList);
+<<<<<<< HEAD
       });
+=======
+        setFilteredEvents(events);
+      }
+    );
+>>>>>>> origin/explore_page
   }, [events.length]);
 
   return (
@@ -82,7 +134,7 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonSearchbar></IonSearchbar>
+        <IonSearchbar inputmode="search" onIonClear={() => {setSearch(""); setFilteredEvents(events)}} onIonChange={e => {setSearch(e.detail.value!); filter()}}></IonSearchbar>
 
         <IonModal isOpen={showModal}>
           <IonCard>
@@ -95,8 +147,14 @@ const Tab2: React.FC = () => {
             <IonCardContent>{modalEvent.description}</IonCardContent>
 
             <IonCardContent>
+<<<<<<< HEAD
               <IonIcon icon={location} /> {modalEvent.location} <br />
               <IonIcon icon={time} /> {modalEvent.time}
+=======
+            <IonIcon icon={location} /> {modalEvent.location} <br/>
+            <IonIcon icon={time} /> {modalEvent.time} <br/>
+            <IonIcon icon={person} /> {going}
+>>>>>>> origin/explore_page
             </IonCardContent>
 
             <IonCardContent>
@@ -119,7 +177,12 @@ const Tab2: React.FC = () => {
           <IonButton onClick={() => setShowModal(false)}>Done</IonButton>
         </IonModal>
 
+<<<<<<< HEAD
         {events.map(event => (
+=======
+  
+        {filteredEvents.map(event => (
+>>>>>>> origin/explore_page
           <IonCard onClick={() => openEvent(event)}>
             <IonImg src={event.image} />
             <IonCardHeader>
