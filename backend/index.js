@@ -14,7 +14,7 @@ app.get('/events', function (req, res) {
       return res.status(500).send();
     }
 
-    return res.send(JSON.parse(data));
+    return res.send(JSON.parse(data)['events']);
   });
 });
 
@@ -54,8 +54,13 @@ app.post('/events', function (req, res) {
 })
 
 app.get('/users', function (req, res) {
-  var data = fs.readFileSync('./data/users.json');
-  res.json(JSON.parse(data)["users"]);
+  fs.readFile('./data/users.json', function (err, data) {
+    if (err) {
+      return res.status(500).send();
+    }
+
+    return res.send(JSON.parse(data)['users']);
+  });
 });
 
 app.post('/users', function (req, res) {
