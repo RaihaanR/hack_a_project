@@ -252,13 +252,8 @@ app.post('/usersGoing/', function (req, res) {
   var foundEvent = null;
 
   users.forEach(user => {
-<<<<<<< HEAD
     if (user['id'] === parseInt(reqBody['user_id'])) {
       foundUser = user
-=======
-    if (user['id'] === reqBody['user_id']) {
-      foundUser = user;
->>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
     }
   });
 
@@ -266,7 +261,6 @@ app.post('/usersGoing/', function (req, res) {
     return res.status(400).send("User id not found");
   }
 
-<<<<<<< HEAD
   foundUser['events'].push(parseInt(reqBody['event_id']))
 
   events.forEach(event => {
@@ -275,25 +269,13 @@ app.post('/usersGoing/', function (req, res) {
     if (event['id'] === parseInt(reqBody['event_id'])) {
       console.log("okkkkk")
       foundEvent = event
-=======
-  foundUser['events'].push(reqBody['event_id']);
-
-  events.forEach(event => {
-    if (events['id'] === reqBody['event_id']) {
-      foundEvent = event;
->>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
     }
   });
   
   if (foundEvent === null) {
     return res.status(400).send("Event id not found");
   }
-<<<<<<< HEAD
   foundEvent['visitors'].push(parseInt(reqBody['user_id']))
-=======
-
-  foundEvent['visitor'].push(reqBody['user_id']);
->>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
 
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function (err) {
     if (err) {
