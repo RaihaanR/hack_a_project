@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonCard, IonIcon, IonLabel, IonButton, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonImg, IonModal, IonSegment, IonSegmentButton } from '@ionic/react';
 import './Tab2.css';
-import { location, time } from 'ionicons/icons';
+import { location, time, person } from 'ionicons/icons';
 
 type Event = {
   id: number;
@@ -32,8 +32,10 @@ const Tab2: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([nullEvent]);
   const [filteredEvents, setFilteredEvents] = useState(events);
+  const [going, setGoing] = useState("null");
  
   function openEvent(e: Event) {
+    getGoing(e.id)
     setModalEvent(e);
     setShowModal(true);    
   }
@@ -60,6 +62,13 @@ const Tab2: React.FC = () => {
 
   let server = "https://5498e4a8.ngrok.io/";
 
+  function getGoing(id: number) {
+    console.log(id);
+    fetch(server+"events/" + id + "/getUsers/")
+    .then(res => res.text().then(v => setGoing(v)))
+  }
+  
+
   useEffect(() => {
     fetch(server+"events/")
     .then(res => res.json())
@@ -68,7 +77,6 @@ const Tab2: React.FC = () => {
         const eventList: Event[] = [];
         (result as Event[]).forEach(element => {
           eventList.push(element);
-          console.log(events);
         });
         setEvent(eventList);
         setFilteredEvents(events);
@@ -107,7 +115,8 @@ const Tab2: React.FC = () => {
 
             <IonCardContent>
             <IonIcon icon={location} /> {modalEvent.location} <br/>
-            <IonIcon icon={time} /> {modalEvent.time}
+            <IonIcon icon={time} /> {modalEvent.time} <br/>
+            <IonIcon icon={person} /> {going}
             </IonCardContent>
 
             <IonCardContent>
