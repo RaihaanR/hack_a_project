@@ -17,12 +17,17 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
-  IonIcon
+  IonIcon,
+  IonText,
+  IonSlides,
+  IonSlide,
+  IonChip,
+  IonLabel
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Tab3.css";
 import "./Profile.css";
-import { location, time } from "ionicons/icons";
+import { location, time, people } from "ionicons/icons";
 
 type Event = {
   id: number;
@@ -37,12 +42,12 @@ type Event = {
 const Tab3: React.FC = () => {
   var nullEvent: Event = {
     id: -1,
-    image: "",
-    organiser: "null",
-    name: "null",
-    location: "null",
-    description: "null",
-    time: "null"
+    image: "https://shilohplainfield.org/images/Blank-photo-small.png",
+    organiser: "",
+    name: "",
+    location: "",
+    description: "",
+    time: ""
   };
 
   const [search, setSearch] = useState("");
@@ -88,6 +93,7 @@ const Tab3: React.FC = () => {
 
   useEffect(() => {
     fetch("https://5498e4a8.ngrok.io/users/DoCSoc/events")
+    // fetch("https://5498e4a8.ngrok.io/events/")
       .then(res => res.json())
       .then(result => {
         const eventList: Event[] = [];
@@ -110,45 +116,58 @@ const Tab3: React.FC = () => {
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Student Name</IonTitle>
+            <IonTitle size="large">{username}</IonTitle>
           </IonToolbar>
         </IonHeader>
 
-        <h1 className="ion-text-center">Going</h1>
+        <IonText>
+          <h1>&nbsp;&nbsp;&nbsp;Going</h1>
+        </IonText>
+     
+        <IonSlides>
+          {events.map(event => (
+            <IonSlide>
+              <IonCard>
+                <IonImg src={event.image} />
+                <IonCardHeader>
+                  <IonCardSubtitle>By {event.organiser}</IonCardSubtitle>
+                  <IonCardTitle>{event.name}</IonCardTitle>
+                </IonCardHeader>
 
-        {/* <IonGrid>
-          <IonRow className="ion-margin-start">
-            Email: firstname.lastname@uni.ac.uk
-          </IonRow>
-          <IonRow className="ion-margin-start">Interests: Facebook</IonRow>
-        </IonGrid> */}
+                <IonCardContent>
+                  <IonIcon icon={location} /> {event.location} <br />
+                  <IonIcon icon={time} /> {event.time}
+                </IonCardContent>
+              </IonCard>
+          </IonSlide>
+          ))}
+        </IonSlides>
 
-        <IonSearchbar
-          inputmode="search"
-          onIonClear={() => {
-            setSearch("");
-            setFilteredEvents(events);
-          }}
-          onIonChange={e => {
-            setSearch(e.detail.value!);
-            filter();
-          }}
-        ></IonSearchbar>
+        <IonText>
+          <h1>&nbsp;&nbsp;&nbsp;Profile</h1>
+        </IonText>
 
-        {events.map(event => (
-          <IonCard>
-            <IonImg src={event.image} />
-            <IonCardHeader>
-              <IonCardSubtitle>By {event.organiser}</IonCardSubtitle>
-              <IonCardTitle>{event.name}</IonCardTitle>
-            </IonCardHeader>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardSubtitle>Username</IonCardSubtitle>
+            <IonCardTitle>{username}</IonCardTitle>
+            <br/>
+            <IonCardSubtitle>Name</IonCardSubtitle>
+            <IonCardTitle>John Wick</IonCardTitle>
+          </IonCardHeader>
 
-            <IonCardContent>
-              <IonIcon icon={location} /> {event.location} <br />
-              <IonIcon icon={time} /> {event.time}
-            </IonCardContent>
-          </IonCard>
-        ))}
+          <IonCardContent>
+            <IonIcon icon={location} /> London, UK <br />
+            <IonIcon icon={people} /> Following 23 people
+          </IonCardContent>
+        </IonCard>
+
+
+        {/* <IonChip>
+          <IonIcon name="pin" color="primary" />
+          <IonLabel>Icon Chip</IonLabel>
+          <IonIcon name="close" />
+        </IonChip> */}
       </IonContent>
     </IonPage>
   );

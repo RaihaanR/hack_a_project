@@ -35,12 +35,12 @@ type Event = {
 const Tab2: React.FC = () => {
   var nullEvent: Event = {
     id: -1,
-    image: "",
-    organiser: "null",
-    name: "null",
-    location: "null",
-    description: "null",
-    time: "null"
+    image: "https://shilohplainfield.org/images/Blank-photo-small.png",
+    organiser: "",
+    name: "",
+    location: "",
+    description: "",
+    time: ""
   };
 
   const userId = 0;
@@ -78,7 +78,7 @@ const Tab2: React.FC = () => {
   }
 
   function userNotGoingToEvent(e: number) {
-    fetch(server + "usersNotGoing", {
+    fetch(server + "usersNotGoing/", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
