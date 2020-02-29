@@ -31,27 +31,27 @@ app.get('/events/:id', function (req, res) {
 
 app.post('/events', function (req, res) {
   var data = fs.readFileSync('./data/data.json');
-  var events = JSON.parse(data)["events"];
+  var events = JSON.parse(data)['events'];
   var newEvent = req.body;
 
-  if (newEvent["name"] == null || newEvent["organiser"] == null || newEvent["location"] == null || newEvent["time"] == null || newEvent["image"] == null) {
-    return res.status(400).send({message: "Invalid event format"})
+  if (newEvent['name'] == null || newEvent['organiser'] == null || newEvent['location'] == null || newEvent['time'] == null || newEvent['image'] == null) {
+    return res.status(400).json({message: "Invalid event format"});
   }
 
-  events.push(newEvent)
+  events.push(newEvent);
 
-  newEvent["id"] = events.length
-  newEvent["post_time"] = new Date()
-  newEvent["visitors"] = []
+  newEvent["id"] = events.length;
+  newEvent["post_time"] = new Date();
+  newEvent["visitors"] = [];
 
   fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function(err) {
     if (err) {
       return res.status(500).json({message: "Internal server format"});
     }
 
-    return res.status(200).json(events);
+    return res.status(200).send(events);
   });
-})
+});
 
 app.get('/users', function (req, res) {
   fs.readFile('./data/users.json', function (err, data) {
@@ -65,26 +65,26 @@ app.get('/users', function (req, res) {
 
 app.post('/users', function (req, res) {
   var data = fs.readFileSync('./data/users.json');
-  var users = JSON.parse(data)["users"];
+  var users = JSON.parse(data)['users'];
   var newUser = req.body;
 
   console.log(newUser);
 
-  if (newUser["username"] == null) {
-    return res.status(400).json({ message: "Invalid event format"})
+  if (newUser['username'] == null) {
+    return res.status(400).json({ message: "Invalid event format"});
   }
 
   users.push(newUser);
 
-  newUser["id"] = users.length;
-  newUser["events"] = [];
+  newUser['id'] = users.length;
+  newUser['events'] = [];
 
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function(err) {
     if (err) {
-      return res.status(500).json({ message: "Internal server format"})
+      return res.status(500).json({ message: "Internal server format"});
     }
 
-    return res.status(200).json(users)
+    return res.status(200).send(users);
   });
 });
 
