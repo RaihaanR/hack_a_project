@@ -1,7 +1,6 @@
-var express = require('express')
-var app = express()
-
-var fs = require('fs')
+var express = require('express');
+var fs = require('fs');
+var app = express();
 
 app.use(express.json());
 
@@ -11,7 +10,14 @@ app.get('/', function (req, res) {
 
 app.get('/events', function (req, res) {
   var data = fs.readFileSync('./data/data.json');
-  console.log(data.toString());
+  res.send(JSON.parse(data));
+})
+
+app.get('/events/:id', function (req, res) {
+  var id = req.params.id;
+  var data = JSON.parse(fs.readFileSync('./data/data.json'))['events'];
+
+  res.send(data[id]);
 })
 
 app.post('/events', function (req, res) {
