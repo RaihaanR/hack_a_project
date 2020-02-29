@@ -171,7 +171,7 @@ const Tab2: React.FC = () => {
                   <IonLabel>Going</IonLabel>
                 </IonSegmentButton>
                 <IonSegmentButton value="no">
-                  <IonLabel>No</IonLabel>
+                  <IonLabel>Not Going</IonLabel>
                 </IonSegmentButton>
               </IonSegment>
             </IonCardContent>
