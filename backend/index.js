@@ -9,7 +9,13 @@ app.get('/', function (req, res) {
 
 app.get('/events', function (req, res) {
   var data = fs.readFileSync('./data/data.json');
-  console.log(data.toString());
+  res.send(data.toString());
+})
+
+app.get('/events/:id', function (req, res) {
+  var id = req.params.id;
+  var data = JSON.parse(fs.readFileSync('./data/data.json'))['events'][id];
+  res.send(data);
 })
 
 app.listen(3000)
