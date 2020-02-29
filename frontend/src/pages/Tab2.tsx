@@ -44,8 +44,7 @@ const Tab2: React.FC = () => {
   }
 
 
-  function userIsGoingToEvent(v: string, e: number) {
-    setIsGoing(v);
+  function userIsGoingToEvent(e: number) {
     fetch(server + "usersGoing", {
       method: 'POST',
       headers: {
@@ -58,6 +57,30 @@ const Tab2: React.FC = () => {
       })
     })
 
+  }
+
+  function userNotGoingToEvent(e: number) {
+    fetch(server + "usersNotGoing", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId.toString(),
+        event_id: e.toString(),
+      })
+    })
+
+  }
+
+  function updateEventStatus(v: string, e: number) {
+    setIsGoing(v);
+    if (v === "yes") {
+      userIsGoingToEvent(e);
+    } else {
+      userNotGoingToEvent(e);
+    }
   }
 
   function getIsGoing(id: number) {
@@ -143,7 +166,7 @@ const Tab2: React.FC = () => {
             </IonCardContent>
 
             <IonCardContent>
-              <IonSegment value={userIsGoing} onIonChange={e => userIsGoingToEvent(e.detail.value!, modalEvent.id)}>
+              <IonSegment value={userIsGoing} onIonChange={e => updateEventStatus(e.detail.value!, modalEvent.id)}>
                 <IonSegmentButton value="yes">
                   <IonLabel>Going</IonLabel>
                 </IonSegmentButton>
@@ -154,7 +177,7 @@ const Tab2: React.FC = () => {
             </IonCardContent>
           </IonCard>
 
-          <IonButton onClick={() => {setShowModal(false); setIsGoing("no")}}>Done</IonButton>
+          <IonButton onClick={() => setShowModal(false)}>Done</IonButton>
         </IonModal>
 
   
