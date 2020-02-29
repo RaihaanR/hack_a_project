@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{"events":[{"id":0,"name":"Climb Queens Tower","organiser":"DoCSoc","location":"Imperial College London","time":"Sunday 1st March, 2PM","image":"https://www.imperial.ac.uk/news/image/mainnews2012/40761.jpg","description":"Ever wondered what's the view from the top of queens tower? Come and join us to climb up to the top of queens tower for just £3! This is the one and only chance for you to have access to the top of the tower, so drop by to exercise and enjoy South Kensington's view from above!","post_time":"2012-04-23T18:25:43.511Z","visitors":[0,1,0,0]},{"id":1,"name":"Revel","organiser":"DoCSoc","location":"Quaglino's","time":"Monday 2nd March, 7:30PM","image":"https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F90845043%2F133544235468%2F1%2Foriginal.20200204-155442?w=1080&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C22%2C1920%2C960&s=7ba1215a5d3099cd2b2682b685deb9b8","description":"A little party never killed nobody, so join RCSU and DoCSoc for an extravagant night of glitz, glam and a party fit for the 20's - here's to Roaring Revel! \n\n From Spanish rooftop bars to Parisian themed halls, we're now taking you back in time to the Prohibition era. Our chosen gin mill, Quaglino's, is decorated to the taste of the period and has a history as rich as the location of St James's.","post_time":"2012-04-23T18:25:43.511Z","visitors":[]},{"id":2,"name":"Karaoke","organiser":"DoCSoc","location":"Sherfield Building","time":"Sunday 1st March, 2pm","image":"https://cdn-b.william-reed.com/var/wrbm_gb_hospitality/storage/images/publications/hospitality/morningadvertiser.co.uk/running-your-pub/entertainment/what-impact-can-karaoke-have-on-pub-trading/2929581-1-eng-GB/What-impact-can-karaoke-have-on-pub-trading_wrbm_large.jpg","description":"Who doesn't love some karaoke","post_time":"2012-04-23T18:25:43.511Z","visitors":[]},{"name":"test","organiser":"tester","location":"huxley","time":"Tomorrow","image":"test","id":4,"post_time":"2020-02-29T15:41:37.213Z","visitors":[]}]}
-=======
 {
     "events": [
         {
@@ -50,4 +47,3 @@
         }
     ]
 }
->>>>>>> c49cef1aea3ad83222e261fc39169d081fbc5a2f
