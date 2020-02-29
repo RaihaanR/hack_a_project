@@ -1,10 +1,12 @@
 var express = require('express');
+const cors = require('cors');
 var fs = require('fs');
 var app = express();
 
 var port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', function (req, res) {
   res.send('Nothing here');
@@ -48,9 +50,8 @@ app.post('/events', function (req, res) {
 
   fs.writeFile('./data/data.json', JSON.stringify({events: events}), 'utf8', function(err) {
     if (err) {
-      return res.status(500).json({message: "Internal server format"});
+      return res.status(500).json({message: "Internal server error"});
     }
-
     return res.status(200).send(events);
   });
 });
@@ -60,7 +61,7 @@ app.get('/users', function (req, res) {
     if (err) {
       return res.status(500).send();
     }
-
+    console.log(JSON.parse(data)['users'][1])
     return res.send(JSON.parse(data)['users']);
   });
 });
@@ -75,6 +76,11 @@ app.post('/users', function (req, res) {
   if (newUser['username'] == null) {
     return res.status(400).json({ message: "Invalid event format"});
   }
+  users.forEach(user => {
+    if (user['username'] === newUser['username']) {
+      return res.status(400).json({ message: "Username is already taken"});
+    }
+  });
 
   users.push(newUser);
 
@@ -83,9 +89,9 @@ app.post('/users', function (req, res) {
 
   fs.writeFile('./data/users.json', JSON.stringify({users: users}), 'utf8', function(err) {
     if (err) {
-      return res.status(500).json({ message: "Internal server format"});
+      return res.status(500).json({ message: "Internal server error"});
     }
-    return res.status(200).send(users);
+    return res.status(200).json(users);
   });
 });
 
