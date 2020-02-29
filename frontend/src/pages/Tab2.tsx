@@ -17,10 +17,11 @@ import {
   IonImg,
   IonModal,
   IonSegment,
-  IonSegmentButton
+  IonSegmentButton,
+  IonChip
 } from "@ionic/react";
 import "./Tab2.css";
-import { location, time, person } from "ionicons/icons";
+import { location, time, person, pin } from "ionicons/icons";
 
 type Event = {
   id: number;
@@ -30,6 +31,7 @@ type Event = {
   location: string;
   description: string;
   time: string;
+  tags: string[];
 };
 
 const Tab2: React.FC = () => {
@@ -40,7 +42,8 @@ const Tab2: React.FC = () => {
     name: "",
     location: "",
     description: "",
-    time: ""
+    time: "",
+    tags: []
   };
 
   const userId = 0;
@@ -181,13 +184,17 @@ const Tab2: React.FC = () => {
               <IonCardTitle>{modalEvent.name}</IonCardTitle>
             </IonCardHeader>
 
-            <IonCardContent>{modalEvent.description}</IonCardContent>
-
             <IonCardContent>
-            <IonIcon icon={location} /> {modalEvent.location} <br/>
-            <IonIcon icon={time} /> {modalEvent.time} <br/>
-            <IonIcon icon={person} /> {whosGoing}
+              {modalEvent.description} <br/>
+              <IonIcon icon={location} /> {modalEvent.location} <br/>
+              <IonIcon icon={time} /> {modalEvent.time} <br/>
+              <IonIcon icon={person} /> {whosGoing} <br/>
+              <IonIcon icon={pin} />
+              {modalEvent.tags.map(tag => (
+                  <IonChip>{tag}</IonChip>
+              ))}
             </IonCardContent>
+
 
             <IonCardContent>
               <IonSegment value={userIsGoing} onIonChange={e => updateEventStatus(e.detail.value!, modalEvent.id)}>
@@ -198,6 +205,7 @@ const Tab2: React.FC = () => {
                   <IonLabel>Not Going</IonLabel>
                 </IonSegmentButton>
               </IonSegment>
+
             </IonCardContent>
           </IonCard>
 
