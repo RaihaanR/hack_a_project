@@ -123,7 +123,8 @@ app.post('/events', function (req, res) {
   newEvent['id'] = events.length;
   newEvent['post_time'] = new Date();
   newEvent['visitors'] = [];
-
+  newEvent['tags'] = [];
+  
   fs.writeFile('./data/events.json', JSON.stringify({events: events}), 'utf8', function (err) {
     if (err) {
       return res.sendStatus(500);
