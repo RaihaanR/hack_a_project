@@ -1,0 +1,30 @@
+.profile {
+  border-radius: 10px;
+  box-shadow: 0px 5px 29px rgb(90, 84, 84);
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: rgb(203, 231, 240);
+  min-width: 40%;
+}
+.name {
+  border-radius: 10px;
+  box-shadow: 0px 5px 29px rgb(90, 84, 84);
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: rgb(203, 231, 240);
+  align-items: center;
+  /* min-width: 10%; */
+}
+
+.block {
+}
+
+.image {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
