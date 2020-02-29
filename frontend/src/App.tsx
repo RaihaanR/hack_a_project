@@ -1,4 +1,6 @@
 import React from "react";
+
+//post to /event
 import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
@@ -7,13 +9,22 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs
+  IonTabs,
+  IonImg
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { ellipse, square, triangle, person, compass, fileTrayStacked } from "ionicons/icons";
+import {
+  ellipse,
+  square,
+  triangle,
+  person,
+  compass,
+  fileTrayStacked
+} from "ionicons/icons";
 import Tab1 from "./pages/Tab1";
 import Tab2 from "./pages/Tab2";
 import Tab3 from "./pages/Tab3";
+import Event from "./pages/Eventpage";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -44,6 +55,7 @@ const App: React.FC = () => (
           <Route path="/tab3" component={Tab3} />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
+
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
             <IonIcon icon={fileTrayStacked} />
